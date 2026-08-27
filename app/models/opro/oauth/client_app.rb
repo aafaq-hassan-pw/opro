@@ -10,7 +10,11 @@ class Opro::Oauth::ClientApp < ActiveRecord::Base
   alias_attribute :client_secret, :app_secret
   alias_attribute :secret,        :app_secret
 
-  serialize :permissions, type: Hash
+  if ActiveRecord.gem_version < Gem::Version.new("7.1")
+    serialize :permissions, Hash
+  else
+    serialize :permissions, type: Hash
+  end
 
   # attr_accessible :user, :name, :app_id, :client_secret, :app_secret, :secret
 
