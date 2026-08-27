@@ -8,24 +8,24 @@ module ActionDispatch::Routing
 
       unless skip_routes.include?(:auth)
         oauth_new_controller = controllers[:oauth_new] || 'opro/oauth/auth'
-        get  'oauth/new'          => "#{oauth_new_controller}#new",  :as => 'oauth_new'
-        post 'oauth/authorize'    => 'opro/oauth/auth#create',       :as => 'oauth_authorize'
+        get 'oauth/new', to: "#{oauth_new_controller}#new", as: 'oauth_new'
+        post 'oauth/authorize', to: 'opro/oauth/auth#create', as: 'oauth_authorize'
       end
 
       oauth_token_controller = controllers[:oauth_token] || 'opro/oauth/token'
-      post 'oauth/token'        => "#{oauth_token_controller}#create",      :as => 'oauth_token', :defaults => { :format => 'json' }
+      post 'oauth/token', to: "#{oauth_token_controller}#create", as: 'oauth_token', defaults: { format: 'json' }
 
       unless skip_routes.include?(:client_apps)
         oauth_client_apps = controllers[:oauth_client_apps] ||'opro/oauth/client_app'
-        resources :oauth_client_apps, :controller => oauth_client_apps
+        resources :oauth_client_apps, controller: oauth_client_apps
       end
       unless skip_routes.include?(:docs)
         oauth_docs = controllers[:oauth_docs] ||'opro/oauth/docs'
-        resources :oauth_docs,        :controller => oauth_docs, :only => [:index, :show]
+        resources :oauth_docs, controller: oauth_docs, only: [:index, :show]
       end
       unless skip_routes.include?(:tests)
         oauth_tests = controllers[:oauth_tests] ||'opro/oauth/tests'
-        resources :oauth_tests,       :controller => oauth_tests, :only => [:index, :show, :create, :destroy]
+        resources :oauth_tests, controller: oauth_tests, only: [:index, :show, :create, :destroy]
       end
     end
   end
