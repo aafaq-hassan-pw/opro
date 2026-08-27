@@ -265,7 +265,7 @@ To start out overriding a controller we need to specify the new controller in yo
 
 
 ```ruby
-mount_opro_oauth :controllers => {:oauth_client_apps => 'oauth/client_apps'}
+mount_opro_oauth controllers: { oauth_client_apps: 'oauth/client_apps' }
 ```
 
 
@@ -288,18 +288,18 @@ It may help to look at the [current oPRO controllers](https://github.com/opro/op
 If you do not wish for test, docs, or client_apps views & controllers to be available, you can skip them using `except` in your `mount_opro_oauth` like this:
 
 ```ruby
-mount_opro_oauth :except => [:oauth_client_apps]
+mount_opro_oauth except: [:oauth_client_apps]
 ```
 
 We recommend against doing this, but we aren't your mother.
 
 If you don't need auth routes because you are only using "Password Token Exchange" you can use `except` like this:
 ```ruby
-mount_opro_oauth :except => [:auth]
+mount_opro_oauth except: [:auth]
 ```
 or if you don't need docs and tests too:
 ```ruby
-mount_opro_oauth :except => [:auth, :docs, :tests]
+mount_opro_oauth except: [:auth, :docs, :tests]
 ```
 
 
