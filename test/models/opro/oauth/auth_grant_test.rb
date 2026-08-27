@@ -22,4 +22,13 @@ class OproAuthGrantTest < ActiveSupport::TestCase
     ::Opro.require_refresh_within = 1.day
     refute grant.expired?
   end
+
+  test "persists hash permissions" do
+    grant = create_auth_grant
+    permissions = { "read" => true, "write" => false }
+
+    grant.update_permissions(permissions)
+
+    assert_equal permissions, grant.reload.permissions
+  end
 end
