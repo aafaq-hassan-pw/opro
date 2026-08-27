@@ -36,10 +36,13 @@ ActiveRecord::Migration.verbose = false
 ActiveRecord::Base.logger = Logger.new(nil)
 
 
-ActiveRecord::MigrationContext.new(
-  [File.expand_path("../dummy/db/migrate/", __FILE__)],
-  ActiveRecord::SchemaMigration
-).migrate
+migrations_path = [File.expand_path("../dummy/db/migrate/", __FILE__)]
+migration_context = if ActiveRecord.gem_version < Gem::Version.new("7.1")
+  ActiveRecord::MigrationContext.new(migrations_path, ActiveRecord::SchemaMigration)
+else
+  ActiveRecord::MigrationContext.new(migrations_path)
+end
+migration_context.migrate
 
 class ActiveSupport::TestCase
   self.use_transactional_tests = true
