@@ -16,7 +16,11 @@ class Opro::Oauth::AuthGrant < ActiveRecord::Base
 
   alias_attribute :token, :access_token
 
-  serialize :permissions, type: Hash
+  if ActiveRecord.gem_version < Gem::Version.new("7.1")
+    serialize :permissions, Hash
+  else
+    serialize :permissions, type: Hash
+  end
 
   # attr_accessible :code, :access_token, :refresh_token, :access_token_expires_at, :permissions, :user_id, :user, :application_id, :application
 
