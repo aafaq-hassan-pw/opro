@@ -44,6 +44,10 @@ module Dummy
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
+    if Rails.gem_version >= Gem::Version.new("8.0") && Rails.gem_version < Gem::Version.new("8.1")
+      config.active_support.to_time_preserves_timezone = :zone
+    end
+
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
